@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joshua_Banking systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Joshua_Banking systems home">
+        <span class="brand-mark">J</span>
+        <span>Joshua_Banking systems</span>
+      </a>
+      <div class="topbar-meta">
+        <span class="status-dot"></span>
+        <span>Banking workspace</span>
+        <button class="icon-button" id="clear-data" title="Reset all account data" aria-label="Reset all account data">↻</button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="intro">
+        <div>
+          <p class="eyebrow">Personal banking / 01</p>
+          <h1>Move money<br><em>with clarity.</em></h1>
+          <p class="intro-copy">A focused workspace for everyday accounts, transfers, and lending.</p>
+        </div>
+        <div class="date-stamp" id="today"></div>
+      </section>
+
+      <section class="overview-grid" aria-label="Account overview">
+        <article class="metric-card metric-main">
+          <div class="metric-label">Total balance <span class="metric-icon">↗</span></div>
+          <div class="metric-value" id="total-balance">KES 0.00</div>
+          <div class="metric-foot"><span id="account-count">0 accounts</span><span class="live-label"><span class="status-dot"></span> Live</span></div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">Available accounts</div>
+          <div class="metric-value small" id="active-count">0</div>
+          <div class="metric-foot">Personal and loan accounts</div>
+        </article>
+        <article class="metric-card accent-card">
+          <div class="metric-label">Activity</div>
+          <div class="metric-value small" id="transaction-count">0</div>
+          <div class="metric-foot">Transactions recorded</div>
+        </article>
+      </section>
+
+      <div class="workspace-grid">
+        <section class="panel accounts-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Your accounts</p>
+              <h2>Accounts</h2>
+            </div>
+            <button class="primary-button" data-modal="account-modal"><span>＋</span> New account</button>
+          </div>
+          <div id="account-list" class="account-list"></div>
+        </section>
+
+        <aside class="panel activity-panel">
+          <div class="panel-heading compact">
+            <div>
+              <p class="eyebrow">Latest movement</p>
+              <h2>Activity</h2>
+            </div>
+          </div>
+          <div id="activity-list" class="activity-list"></div>
+        </aside>
+      </div>
+
+      <section class="action-section">
+        <div class="section-heading">
+          <p class="eyebrow">Quick actions</p>
+          <h2>Manage money</h2>
+        </div>
+        <div class="action-grid">
+          <button class="action-card" data-modal="deposit-modal"><span class="action-number">01</span><span class="action-title">Deposit funds</span><span class="action-arrow">↗</span></button>
+          <button class="action-card" data-modal="withdraw-modal"><span class="action-number">02</span><span class="action-title">Withdraw funds</span><span class="action-arrow">↗</span></button>
+          <button class="action-card" data-modal="transfer-modal"><span class="action-number">03</span><span class="action-title">Transfer money</span><span class="action-arrow">↗</span></button>
+          <button class="action-card loan-card" data-modal="loan-modal"><span class="action-number">04</span><span class="action-title">Create loan account</span><span class="action-arrow">↗</span></button>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>JOSHUA_BANKING SYSTEMS / KES</span><span>Secure local workspace</span></footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="account-modal" class="modal">
+    <form method="dialog" class="modal-card" data-form="account">
+      <button type="button" class="close-button" aria-label="Close">×</button>
+      <p class="eyebrow">Account setup</p><h2>Create bank account</h2>
+      <p class="modal-copy">Start a new personal account and give it a name you will recognize.</p>
+      <label>Account holder<input name="holder" required placeholder="e.g. Amina Wanjiku" /></label>
+      <label>Account type<select name="type"><option value="Current">Current account</option><option value="Savings">Savings account</option></select></label>
+      <button class="primary-button full" value="default">Create account <span>↗</span></button>
+    </form>
+  </dialog>
+
+  <dialog id="deposit-modal" class="modal">
+    <form method="dialog" class="modal-card" data-form="deposit">
+      <button type="button" class="close-button" aria-label="Close">×</button><p class="eyebrow">Add funds</p><h2>Deposit money</h2><p class="modal-copy">Choose an account and enter the amount to add.</p>
+      <label>Deposit into<select name="account" class="account-select" required></select></label><label>Amount (KES)<input name="amount" type="number" min="1" step="0.01" required placeholder="0.00" /></label>
+      <button class="primary-button full" value="default">Confirm deposit <span>↗</span></button>
+    </form>
+  </dialog>
+
+  <dialog id="withdraw-modal" class="modal">
+    <form method="dialog" class="modal-card" data-form="withdraw">
+      <button type="button" class="close-button" aria-label="Close">×</button><p class="eyebrow">Take out funds</p><h2>Withdraw money</h2><p class="modal-copy">Withdrawals can only be made against an available balance.</p>
+      <label>Withdraw from<select name="account" class="account-select" required></select></label><label>Amount (KES)<input name="amount" type="number" min="1" step="0.01" required placeholder="0.00" /></label>
+      <button class="primary-button full" value="default">Confirm withdrawal <span>↗</span></button>
+    </form>
+  </dialog>
+
+  <dialog id="transfer-modal" class="modal">
+    <form method="dialog" class="modal-card" data-form="transfer">
+      <button type="button" class="close-button" aria-label="Close">×</button><p class="eyebrow">Move funds</p><h2>Transfer money</h2><p class="modal-copy">Move funds instantly between your Joshua_Banking systems accounts.</p>
+      <label>From account<select name="from" class="account-select" required></select></label><label>To account<select name="to" class="account-select" required></select></label><label>Amount (KES)<input name="amount" type="number" min="1" step="0.01" required placeholder="0.00" /></label>
+      <button class="primary-button full" value="default">Make transfer <span>↗</span></button>
+    </form>
+  </dialog>
+
+  <dialog id="loan-modal" class="modal">
+    <form method="dialog" class="modal-card" data-form="loan">
+      <button type="button" class="close-button" aria-label="Close">×</button><p class="eyebrow">Bonus feature / 10,000 KES</p><h2>Disburse a loan</h2><p class="modal-copy">Create a loan account for an existing customer and disburse KES 10,000 into their account.</p>
+      <label>Customer<select name="customer" class="customer-select" required></select></label><label>Disburse to<select name="account" class="account-select" required></select></label>
+      <div class="loan-summary"><span>Loan principal</span><strong>KES 10,000.00</strong></div>
+      <button class="primary-button full" value="default">Create & disburse <span>↗</span></button>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
